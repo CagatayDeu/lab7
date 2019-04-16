@@ -8,10 +8,19 @@ namespace Lab07
 {
     class RegexNotFoundException : Exception
     {
-        private Exception e;
-        public RegexNotFoundException(Exception e)
+        public RegexNotFoundException()
         {
-            this.e = e;
+
+        }
+
+        public RegexNotFoundException(Exception e) : base(e.ToString())
+        {
+
+        }
+
+        public RegexNotFoundException(string message) : base(String.Format("Hata" + message))
+        {
+
         }
         //Hiç argüman almayan, Sadece mesajı alan , Mesaj ve iç exception'i alan 3 farklı consturoctor tanımlanacak.
     }

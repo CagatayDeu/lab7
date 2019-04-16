@@ -26,21 +26,26 @@ namespace Lab07
 
             using (WebClient client = new WebClient())
             {
-                html = client.DownloadString(url);
-                Regex r = new Regex(regex);
-
                 try
                 {
+                    html = client.DownloadString(url);
+                    Regex r = new Regex(regex);
+
                     if (r.IsMatch(html))
                         foreach (Match m in r.Matches(html))
                         {
                             list.Add(m);
                         }
-                } catch(RegexNotFoundException e)
+                }
+                catch (RegexNotFoundException e)
+                {
+                    Console.WriteLine(e.Message);
+                }
+                catch (Exception e)
                 {
                     Console.WriteLine(e);
                 }
-                    
+
             }
 
             return list;
@@ -48,8 +53,20 @@ namespace Lab07
 
         public void ReplaceInWebsite(String regex,String regexrep)
         {
-            Regex r = new Regex(regex);
-            html = r.Replace(html, regexrep);
+            try
+            {
+                Regex r = new Regex(regex);
+                html = r.Replace(html, regexrep);
+            }
+            catch (RegexNotFoundException e)
+            {
+                Console.WriteLine(e.Message);
+            }
+            catch(Exception e)
+            {
+                Console.WriteLine(e);
+            }
+            
         }
 
         public void SaveHtml()
@@ -60,11 +77,15 @@ namespace Lab07
                 sw.Write(html);
                 sw.Close();
             }
+            catch (RegexNotFoundException e)
+            {
+                Console.WriteLine(e.Message);
+            }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-            
+
         }
         
 
